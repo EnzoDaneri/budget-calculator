@@ -1,14 +1,24 @@
 
+<script>
+import { setContext } from 'svelte';
+//Components
+ import Navbar from './Navbar.svelte';
+ import ExpensesList from './ExpensesList.svelte';
+ //Data
+ import expensesData from './expenses.js';
+//Variables
+ let expenses = [...expensesData];
+ //Functions
+ const removeExpense= (id) => {
+     expenses = expenses.filter(item => item.id !== id);
+ }
+ //Context
+ setContext('remove', removeExpense)
+
+</script>
 
 
-<nav class="nav">
-<div class="nav-center">
- <h1 class="nav-title">Budget Calculator</h1>
-
-</div>
-<button type="button" class="nav-btn">
-<i class="far fa-plus-square"></i>
-add item
-</button>
-</nav>
-<!--  https://github.com/EnzoDaneri/budget-calculator.git -->
+<Navbar/>
+<main class="content">
+<ExpensesList {expenses} />
+</main>
