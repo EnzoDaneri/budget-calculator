@@ -1,4 +1,10 @@
 <script>
+// import {onMount, onDestroy, beforeUpdate, afterUpdate} from 'svelte';
+// onMount(() => {
+//     console.log('form has mounted');
+    
+// })
+
  import Title from './Title.svelte';
 export let name = '';  //ese export es para poder usarlas desde la función editar también
 export let amount = null;
