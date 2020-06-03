@@ -6,6 +6,7 @@ import { setContext } from 'svelte';
  import Navbar from './Navbar.svelte';
  import ExpensesList from './ExpensesList.svelte';
  import Totals from './Totals.svelte';
+ import ExpenseForm from './ExpenseForm.svelte';
  //Data
  import expensesData from './expenses.js';
 //Variables
@@ -21,6 +22,11 @@ import { setContext } from 'svelte';
  const  clearExpenses = () => {
      expenses = [];
  }
+ const addExpense = ({name, amount}) => {
+     let expense = {id: Math.random() * Date.now(),
+     name, amount};
+     expenses = [expense, ...expenses];
+ }
  //Context  
  setContext('remove', removeExpense)
 
@@ -29,6 +35,7 @@ import { setContext } from 'svelte';
 
 <Navbar/>
 <main class="content">
+<ExpenseForm {addExpense}/>
 <Totals title="Total expenses" {total}/>
 <ExpensesList {expenses} />
 <button type="button" class="btn btn-primary btn-block" on:click={clearExpenses}>Clear expenses</button>
