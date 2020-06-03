@@ -11,7 +11,12 @@ import { setContext } from 'svelte';
  import expensesData from './expenses.js';
 //Variables
  let expenses = [...expensesData];
+ //set editing variables
+ let setName = '';
+ let setAmount = null;
+ let setId = null;
  //reactive
+ $: isEditing = setId? true: false;
  $: total = expenses.reduce((ac, curr) => {
      return (ac += curr.amount);
  }, 0)
@@ -27,15 +32,32 @@ import { setContext } from 'svelte';
      name, amount};
      expenses = [expense, ...expenses];
  }
+ const setModifiedExpense = (id) => {
+     
+      let expense = expenses.find(item => item.id === id);
+      setId = expense.id;
+      setName = expense.name;
+      setAmount = expense.amount;
+ }
+ const editExpense = ({name, amount}) => {
+  expenses = expenses.map(item => {
+      return item.id === setId? {...item, name, amount} : {...item}
+  });
+  setId = null;
+  setAmount= null;
+  setName = '';
+     
+ }
  //Context  
- setContext('remove', removeExpense)
+ setContext('remove', removeExpense);
+ setContext('modify', setModifiedExpense);
 
 </script>
  
 
 <Navbar/>
 <main class="content">
-<ExpenseForm {addExpense}/>
+<ExpenseForm {addExpense} name={setName} amount={setAmount} {isEditing} {editExpense}/>
 <Totals title="Total expenses" {total}/>
 <ExpensesList {expenses} />
 <button type="button" class="btn btn-primary btn-block" on:click={clearExpenses}>Clear expenses</button>
