@@ -15,12 +15,23 @@ import { setContext } from 'svelte';
  let setName = '';
  let setAmount = null;
  let setId = null;
+ //Toggle form variables
+ let isFormOpen = false;
  //reactive
  $: isEditing = setId? true: false;
  $: total = expenses.reduce((ac, curr) => {
      return (ac += curr.amount);
  }, 0)
  //Functions
+ const showForm = () => {
+     isFormOpen = true;
+ }
+ const hideForm = () => {
+     isFormOpen = false;
+     setName = '';
+     setAmount = null;
+     setId = null;
+ }
  const removeExpense= (id) => {
      expenses = expenses.filter(item => item.id !== id);
  }
@@ -38,6 +49,7 @@ import { setContext } from 'svelte';
       setId = expense.id;
       setName = expense.name;
       setAmount = expense.amount;
+      showForm();
  }
  const editExpense = ({name, amount}) => {
   expenses = expenses.map(item => {
@@ -55,9 +67,17 @@ import { setContext } from 'svelte';
 </script>
  
 
-<Navbar/>
+<Navbar {showForm} />
 <main class="content">
-<ExpenseForm {addExpense} name={setName} amount={setAmount} {isEditing} {editExpense}/>
+{#if isFormOpen}
+<ExpenseForm
+ {addExpense}
+ name={setName} 
+ amount={setAmount}
+ {isEditing} 
+ {editExpense}
+ {hideForm}/>
+{/if}
 <Totals title="Total expenses" {total}/>
 <ExpensesList {expenses} />
 <button type="button" class="btn btn-primary btn-block" on:click={clearExpenses}>Clear expenses</button>
