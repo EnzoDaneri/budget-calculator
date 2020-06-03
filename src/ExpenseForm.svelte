@@ -23,6 +23,7 @@ const handleSubmit = () => {
  
     name = '';
     amount = null;
+    hideForm();
     }
 </script>
 
