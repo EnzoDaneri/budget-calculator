@@ -129,12 +129,13 @@ Navbar
   display: flex;
   align-items: center;
   box-shadow: var(--lightShadow);
+  padding-left: 15px;
 }
 
 .nav-center {
   width: 85%;
   max-width: 35rem;
-  margin: 0 auto;
+  margin: 0px auto;
   display: flex;
   justify-content: space-between;
 }
