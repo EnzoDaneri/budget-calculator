@@ -2071,6 +2071,8 @@ add item
     	let t2;
     	let t3;
     	let button;
+    	let t5;
+    	let div;
     	let current;
     	let mounted;
     	let dispose;
@@ -2099,9 +2101,13 @@ add item
     			t3 = space();
     			button = element("button");
     			button.textContent = "Clear expenses";
+    			t5 = space();
+    			div = element("div");
+    			div.innerHTML = `<a href="https://www.youtube.com/watch?v=uk1eM0Yn0UQ">Credits</a>`;
     			attr(button, "type", "button");
     			attr(button, "class", "btn btn-primary btn-block");
     			attr(main, "class", "content");
+    			attr(div, "class", "credits svelte-21g0f0");
     		},
     		m(target, anchor) {
     			mount_component(navbar, target, anchor);
@@ -2114,6 +2120,8 @@ add item
     			mount_component(expenseslist, main, null);
     			append(main, t3);
     			append(main, button);
+    			insert(target, t5, anchor);
+    			insert(target, div, anchor);
     			current = true;
 
     			if (!mounted) {
@@ -2174,6 +2182,8 @@ add item
     			if (if_block) if_block.d();
     			destroy_component(totals);
     			destroy_component(expenseslist);
+    			if (detaching) detach(t5);
+    			if (detaching) detach(div);
     			mounted = false;
     			dispose();
     		}
